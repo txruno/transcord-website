@@ -2,7 +2,7 @@
 title: Transcord v1.0-beta.14
 date: 2025-10-24
 author: masaabu_
-image: posts/v1-0-beta/cover.png
+image: posts/v1-0-beta-14/cover.png
 ---
 
 Transcordは v1.0-beta.14 に更新されました！メッセージ翻訳の対応範囲を拡大し、言語設定UIを改善、翻訳関数を統合して安定性を強化しました。さらに、起動速度の向上と不具合修正も含まれます。
@@ -12,12 +12,12 @@ Transcordは v1.0-beta.14 に更新されました！メッセージ翻訳の対
 ### 拡張されたメッセージ翻訳
 投票や転送されたメッセージの構造を解析し、文脈とレイアウトを保ったまま翻訳します。引用や埋め込みを含む複雑なメッセージでも意味を損なわずに出力できます！
 
-![forwardedMessage](/images/posts/v1-0-beta/forwardedMessage.png)
+![forwardedMessage](/images/posts/v1-0-beta-14/forwardedMessage.png)
 
 ### 言語設定画面を改良
 言語ドロップダウンの下部にページネーションを導入し、一覧に収まりきらない言語にも素早くアクセスできるようにしました。
 
-![languageDropdown](/images/posts/v1-0-beta/languageDropdown.png)
+![languageDropdown](/images/posts/v1-0-beta-14/languageDropdown.png)
 
 ### フィードバックコマンドの追加
 /feedbackを利用して、簡単に開発者に意見や不具合を報告できるようになりました。皆様のご意見をお待ちしております！

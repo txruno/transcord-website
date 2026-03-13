@@ -2,7 +2,7 @@
 title: Transcord v1.0-beta.14
 date: 2025-10-24
 author: masaabu_
-image: posts/v1-0-beta/cover.png
+image: posts/v1-0-beta-14/cover.png
 ---
 
 Transcord has been updated to v1.0-beta.14! The coverage of message translation has been expanded, the language settings UI has been improved, and translation functions have been unified to enhance stability. This release also includes faster startup and bug fixes.
@@ -12,12 +12,12 @@ Transcord has been updated to v1.0-beta.14! The coverage of message translation 
 ### Expanded message translation
 It analyzes the structure of polls and forwarded messages and translates them while preserving context and layout. Even complex messages that include quotes and embeds can be output without losing meaning.
 
-![forwardedMessage](/images/posts/v1-0-beta/forwardedMessage.png)
+![forwardedMessage](/images/posts/v1-0-beta-14/forwardedMessage.png)
 
 ### Improved language settings screen
 Pagination has been added to the bottom of the language dropdown, enabling quick access to languages that do not fit in a single list.
 
-![languageDropdown](/images/posts/v1-0-beta/languageDropdown.png)
+![languageDropdown](/images/posts/v1-0-beta-14/languageDropdown.png)
 
 ### Added feedback command
 You can now use /feedback to easily send suggestions and bug reports to the developers. Your input is very welcome.
