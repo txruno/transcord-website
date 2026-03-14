@@ -34,8 +34,16 @@ function formatPostDate(value: unknown): { formatted: string; timestamp: number 
 }
 
 function getExcerpt(content: string): string {
-  const line = content.split(/\r\n|\r|\n/).find((entry) => entry.trim().length > 0);
-  return line ?? "";
+  const lines = content
+    .split(/\r\n|\r|\n/)
+    .map((entry) => entry.trim());
+
+  const firstHeadingIndex = lines.findIndex((entry) => /^#{1,6}\s+/.test(entry));
+  const introLines = (firstHeadingIndex === -1 ? lines : lines.slice(0, firstHeadingIndex))
+    .filter((entry) => entry.length > 0)
+    .slice(0, 3);
+
+  return introLines.join("\n");
 }
 
 function resolvePostLocale(locale: string): "en" | "ja" | "ko" {

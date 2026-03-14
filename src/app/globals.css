@@ -132,11 +132,11 @@
   }
 
   h3 {
-    @apply my-6 mb-2 pl-2 text-2xl font-semibold border-l-4 border-blue-300;
+    @apply mt-6 mb-4 pl-2 text-2xl font-semibold border-l-4 border-blue-300;
   }
 
   p {
-    @apply mb-2 p-1 text-[1.1rem] text-gray-300;
+    @apply p-1 text-[1.1rem] text-gray-300;
   }
 
   ul {
@@ -159,5 +159,6 @@
 
   img {
     border-radius: .5rem;
+    margin: .5rem 0;
   }
 }

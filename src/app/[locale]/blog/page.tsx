@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 										<span>{posts[0].title}</span>
 										<span className="inline-block align-middle px-3 py-1 bg-gray-500/30 text-gray-300 text-sm rounded-full">{posts[0].date}</span>
 									</h2>
-									<p className="text-lg text-gray-300 line-clamp-4">{posts[0].excerpt}</p>
+									<p className="text-lg text-gray-300 whitespace-pre-line line-clamp-4">{posts[0].excerpt}</p>
 									<Link href={`/${locale}/blog/${posts[0].id}`}>
 										<div className="inline-block rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">{t("blog.read_more")}</div>
 									</Link>
@@ -86,7 +86,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 											<div className="bg-gray-800 p-6 pb-4">
 												<div className="h-38 space-y-1">
 													<h2 className="text-2xl font-semibold">{post.title}</h2>
-													<p className="text-gray-400 line-clamp-3">{post.excerpt}</p>
+													<p className="text-gray-400 whitespace-pre-line line-clamp-3">{post.excerpt}</p>
 												</div>
 												<div className="flex items-center justify-between text-sm text-gray-500">
 													<span>{post.author}</span>
