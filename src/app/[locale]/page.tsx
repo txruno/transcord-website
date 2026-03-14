@@ -85,12 +85,12 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 
   return (
     <div className="bg-gray-900 text-white">
-      <Navbar />
+      <Navbar locale={locale} />
       <main>
         <HeroSection />
         <FeaturesSection />
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </div>
   );
 }

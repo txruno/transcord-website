@@ -1,11 +1,16 @@
 import Navbar from "@/components/Navbar";
 
-export default function BlogLayout({
+export default async function BlogLayout({
 	children,
-}: { children: React.ReactNode }) {
+	params,
+}: {
+	children: React.ReactNode;
+	params: Promise<{ locale: string }>;
+}) {
+	const { locale } = await params;
 	return (
 		<>
-			<Navbar />
+			<Navbar locale={locale} />
 			<main data-page-root>{children}</main>
 		</>);
 }

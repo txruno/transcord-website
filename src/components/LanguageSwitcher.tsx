@@ -9,8 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/lib/locales";
 
-const locales = ['bg', 'zh-CN', 'zh-TW', 'hr', 'cs', 'da', 'nl', 'en', 'en-GB', 'en-US', 'fi', 'fr', 'de', 'el', 'hi', 'hu', 'id', 'it', 'ja', 'ko', 'lt', 'no', 'pl', 'pt-BR', 'ro', 'ru', 'es-ES', 'es-419', 'sv-SE', 'th', 'tr', 'uk', 'vi'];
+const locales = [...SUPPORTED_LOCALES];
 const localeLabels = {
 	"bg": "български",
 	"zh-CN": "中文",
@@ -47,25 +48,35 @@ const localeLabels = {
 	"vi": "Tiếng Việt"
 }
 
+function resolveLocaleFromPath(pathname: string): string {
+  const pathSegments = pathname.split('/').filter(Boolean);
+  if (pathSegments.length > 0 && locales.includes(pathSegments[0] as typeof locales[number])) {
+    return pathSegments[0];
+  }
+
+  return DEFAULT_LOCALE;
+}
+
 export default function LanguageSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
-  const [currentLocale, setCurrentLocale] = useState('');
+  const [currentLocale, setCurrentLocale] = useState(() => resolveLocaleFromPath(pathname));
 
   useEffect(() => {
-    const pathSegments = pathname.split('/').filter(Boolean);
-    if (pathSegments.length > 0 && locales.includes(pathSegments[0])) {
-      setCurrentLocale(pathSegments[0]);
-    } else {
-      setCurrentLocale('en');
-    }
+    setCurrentLocale(resolveLocaleFromPath(pathname));
   }, [pathname]);
 
   const handleChange = (value: string) => {
     const newLocale = value;
     setCurrentLocale(newLocale);
     document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
-    const newPath = `/${newLocale}${pathname.substring(currentLocale.length + 1)}`;
+
+    const pathSegments = pathname.split('/').filter(Boolean);
+    const hasLocalePrefix = pathSegments.length > 0 && locales.includes(pathSegments[0] as typeof locales[number]);
+    const remainingPath = hasLocalePrefix ? pathSegments.slice(1) : pathSegments;
+    const suffix = remainingPath.length > 0 ? `/${remainingPath.join('/')}` : '';
+    const newPath = `/${newLocale}${suffix}`;
+
     router.push(newPath);
   };
 

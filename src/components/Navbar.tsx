@@ -1,5 +1,3 @@
-"use server";
-
 import Link from "next/link";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { House, Newspaper, Download, Menu } from 'lucide-react';
@@ -11,11 +9,9 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet"
 
-import { getLocale } from "@/lib/getLocale";
 import { getTranslate } from "@/lib/locale";
 
-export default async function Navbar() {
-	const locale = await getLocale();
+export default async function Navbar({ locale }: { locale: string }) {
 	const t = await getTranslate(locale);
 
 	const links = [

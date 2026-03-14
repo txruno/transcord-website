@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 
 import { getTranslate } from "@/lib/locale";
+import { SUPPORTED_LOCALES } from "@/lib/locales";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,12 +15,20 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const dynamicParams = false;
+
+export function generateStaticParams(): Array<{ locale: string }> {
+  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+}
+
 export async function generateMetadata(
   { params }: { params: Promise<{ locale: string }> },
 ): Promise<Metadata> {
   const { locale } = await params;
-    const t = await getTranslate(locale);
+  const t = await getTranslate(locale);
+  const metadataBase = new URL(process.env.SITE_URL ?? "https://transcord.vercel.app");
   return {
+    metadataBase,
     title: `Transcord`,
     description: t("home.hero.title"),
     verification: {
@@ -27,7 +36,7 @@ export async function generateMetadata(
     },
     openGraph: {
       type: "website",
-      url: "/",
+      url: `/${locale}`,
       title: "Transcord",
       description: t("home.hero.title"),
       siteName: "Transcord",

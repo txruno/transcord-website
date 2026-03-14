@@ -6,11 +6,11 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
 	const { locale } = await params;
 	return (
 		<div className="bg-gray-900 text-white">
-			<Navbar />
+			<Navbar locale={locale} />
 			<main className="pt-10">
 				<PostSection locale={locale} postId="terms-of-service" home={false} />
 			</main>
-			<Footer />
+			<Footer locale={locale} />
 		</div>
 	)
 }

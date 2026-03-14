@@ -1,7 +1,9 @@
 import { NextResponse, NextRequest } from "next/server"
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/lib/locales";
 
-const SUPPORTED_LANGUAGES = ["en", "ja", "bg", "zh-CN", "zh-TW", "hr", "cs", "da", "nl", "en-GB", "en-US", "fi", "fr", "de", "el", "hi", "hu", "id", "it", "ko", "lt", "no", "pl", "pt-BR", "ro", "ru", "es-ES", "es-419", "sv-SE", "th", "tr", "uk", "vi"];
-const DEFAULT_LANGUAGE = "en";
+const SUPPORTED_LOCALE_LOOKUP = new Map(
+  SUPPORTED_LOCALES.map((locale) => [locale.toLowerCase(), locale])
+);
 
 function parseAcceptLanguageHeader(header: string | null): { code: string; q: number }[] {
   if (!header) {
@@ -23,10 +25,25 @@ function parseAcceptLanguageHeader(header: string | null): { code: string; q: nu
     .sort((a, b) => b.q - a.q);
 }
 
+function resolvePreferredLocale(languageTag: string): string | null {
+  const lowered = languageTag.toLowerCase();
+  const exactMatch = SUPPORTED_LOCALE_LOOKUP.get(lowered);
+  if (exactMatch) {
+    return exactMatch;
+  }
+
+  const baseTag = lowered.split("-")[0];
+  const baseMatch = SUPPORTED_LOCALE_LOOKUP.get(baseTag);
+  if (baseMatch) {
+    return baseMatch;
+  }
+
+  return null;
+}
+
 export function middleware(request: NextRequest) {
   const { pathname, search, origin } = request.nextUrl;
   const response = NextResponse.next();
-  response.headers.set("x-pathname", request.nextUrl.pathname);
 
   if (
     pathname.startsWith('/_next/') ||
@@ -39,7 +56,7 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
-  const pathnameHasLocale = SUPPORTED_LANGUAGES.some(
+  const pathnameHasLocale = SUPPORTED_LOCALES.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
@@ -48,22 +65,15 @@ export function middleware(request: NextRequest) {
   }
 
   const acceptLanguageHeader = request.headers.get('accept-language');
-  let preferredLanguage = DEFAULT_LANGUAGE;
+  let preferredLanguage = DEFAULT_LOCALE;
 
   if (acceptLanguageHeader) {
     const parsedLangs = parseAcceptLanguageHeader(acceptLanguageHeader);
     if (parsedLangs.length > 0) {
       for (const lang of parsedLangs) {
-        const langCode = lang.code.toLowerCase();
-
-        if (SUPPORTED_LANGUAGES.includes(langCode)) {
-          preferredLanguage = langCode;
-          break;
-        }
-
-        const baseCode = langCode.split('-')[0];
-        if (SUPPORTED_LANGUAGES.includes(baseCode)) {
-          preferredLanguage = baseCode;
+        const matchedLocale = resolvePreferredLocale(lang.code);
+        if (matchedLocale) {
+          preferredLanguage = matchedLocale;
           break;
         }
       }
